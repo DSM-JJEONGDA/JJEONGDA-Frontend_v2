@@ -5,6 +5,14 @@ export const InputLabel = styled.label`
     height: 58px;
     border: 1px solid #ffffff;
     border-radius: 29px;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    > img {
+        width: 30px;
+        height: 20px;
+        margin-right: 20px;
+    }
 `
 export const Input = styled.input`
     width: 100%;

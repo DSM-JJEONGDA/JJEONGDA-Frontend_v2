@@ -3,7 +3,8 @@ import * as S from './styles'
 import BackGround from '../../assets/imgaes/auth/background.svg'
 import Logo from '../../assets/imgaes/logo_black.svg'
 import InputBox from './inputbox'
-// import AuthType from '../../assets/imgaes/auth/authtype.svg'
+import axios from 'axios'
+import { BASE_URL } from '../../constant/api'
 interface LoginType {
     name: string
     placeholder: string
@@ -22,11 +23,12 @@ function Auth() {
         password: '',
         authNum: '',
         checkPassword: '',
-        nickName: ''
+        name: ''
     })
-    const { email, password, authNum, checkPassword, nickName } = authContent;
+    const { email, password, authNum, checkPassword, name } = authContent;
     const [type, setType] = useState('로그인')
     const onChangeAuthContent = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target)
         setAuthContent({
             ...authContent,
             [e.target.name]: e.target.value
@@ -45,7 +47,7 @@ function Auth() {
     }]
     const SignupArray: SignupType[] = [
         {
-            name: 'E-mail',
+            name: 'email',
             placeholder: 'E-mail',
             eye: false,
             value: email
@@ -69,15 +71,24 @@ function Auth() {
             value: checkPassword
         },
         {
-            name: 'nickName',
+            name: 'name',
             placeholder: '닉네임',
             eye: false,
-            value: nickName
+            value: name
         }
     ]
     const onClickSubmit = (type: string) => {
-        if (type === '로그인') {
-
+        if (type === '회원가입') {
+            axios.post(BASE_URL + '/register', {
+                email,
+                name,
+                password
+            })
+        } else if (type === '로그인') {
+            axios.post(BASE_URL + '/login', {
+                email,
+                password
+            })
         }
     }
     return (
