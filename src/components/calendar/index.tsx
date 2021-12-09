@@ -10,7 +10,6 @@ function Calendar() {
     const day = date.getDate()
     const [month, setMonth] = useState(date.getMonth() + 1)
     const [year, setYear] = useState(date.getFullYear())
-    const dotw = date.getDay()
     const today = `${date.getFullYear()}-${date.getMonth() + 1}-${day}`
     const firstDOTW = new Date(year, month - 1, 1).getDay()// 해당 달의 첫번째 요일
     const lastDay = new Date(year, month, 0).getDate();
@@ -23,7 +22,7 @@ function Calendar() {
             setMonth(12)
             setYear(year - 1)
         }
-    }, [month])
+    }, [month, year])
     const navigate = useNavigate();
     return (
         <S.Wrapper>
@@ -40,7 +39,7 @@ function Calendar() {
                         <S.EachBox style={{ border: 'none' }} />
                     ))}
                     {Array(lastDay).fill(void 0).map((item, index) => (
-                        <S.EachBox style={today === `${year}-${month}-${index + 1}` ? { color: '#ffffff', backgroundColor: '#707070' } : {}} onClick={() => navigate(`/diary?day=${year}-${month}-${index + 1}`)} > {index + 1}</S.EachBox>
+                        <S.EachBox style={today === `${year}-${month}-${index + 1}` ? { color: '#ffffff', backgroundColor: '#707070' } : {}} onClick={() => navigate(`/diary?year=${year}&month=${month}&day=${index + 1}`)} > {index + 1}</S.EachBox>
                     ))}
                 </div>
                 <S.Arrow src={ArrowRigth} onClick={() => setMonth(month + 1)} />
