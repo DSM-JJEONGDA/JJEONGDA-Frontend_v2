@@ -93,7 +93,7 @@ function Auth() {
     }
     return (
         <S.Wrapper>
-            <S.BackgroundImg img={BackGround} />
+            <S.BackgroundImg style={type === '로그인' ? { height: '100vh' } : { left: '175px' }} img={BackGround} />
             <S.Logo src={Logo} />
             <S.AuthSection>
                 <S.Types>

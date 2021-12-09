@@ -8,17 +8,19 @@ interface StyleProps {
 
 export const Wrapper = styled.div`
     max-width: 100vw;
-    overflow: hidden;
     background-color: #EFE8DE;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
+    /* max-height: 100vh; */
+    overflow: hidden;
 `
 export const BackgroundImg = styled.div`
-    width: 1360px;
+    width: 1265px;
     position: absolute;
     left: 140px;
-    height: 958.61px;
+    height: 1018.61px;
     background-image: url(${(props: StyleProps) => props.img});
     background-repeat: no-repeat;
     background-position: center;
@@ -30,7 +32,7 @@ export const Logo = styled.img`
 export const AuthSection = styled.section`
     margin-top: 340px;
     z-index: 100;
-    margin-bottom: 240px;
+    margin-bottom: 72px;
 `
 export const Types = styled.section`
     display: flex;
