@@ -9,9 +9,12 @@ export const Wrapper = styled.section`
     background-color: #EFE8DE;
     overflow: auto;
     height: 100vh;
+    display: flex;
+    justify-content: center;
 `
 export const DiarySection = styled.div`
-    margin: 48px 0 0 140.5px;
+    /* margin: 48px 0 0 140.5px; */
+    margin-top: 48px;
     width: 1000px;
     display: flex;
     flex-direction: column;
