@@ -32,10 +32,12 @@ export const CalendarContent = styled.section`
     display: flex;
     justify-content: center;
     margin-top: 5px;
+    padding-bottom: 50px;
     > div {
         width: 770px;
         flex-wrap: wrap;
         display: flex;
+        height: 500px;
     }
 `
 export const EachBox = styled.div`
@@ -55,5 +57,5 @@ export const EachBox = styled.div`
     color: #707070;
 `
 export const Arrow = styled.img`
-    margin: 0 100px;
+    margin: 0 100px 0 100px;
 `

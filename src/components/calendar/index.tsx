@@ -24,6 +24,7 @@ function Calendar() {
         }
     }, [month, year])
     const navigate = useNavigate();
+    const is6Week = firstDOTW + lastDay > 35 ? true : false;
     return (
         <S.Wrapper>
             <S.Month>{month}</S.Month>
@@ -33,8 +34,8 @@ function Calendar() {
                 ))}
             </S.Days>
             <S.CalendarContent>
-                <S.Arrow src={ArrowLeft} onClick={() => setMonth(month - 1)} />
-                <div>
+                <S.Arrow style={is6Week ? { marginBottom: '100px' } : {}} src={ArrowLeft} onClick={() => setMonth(month - 1)} />
+                <div style={is6Week ? { height: '600px' } : {}}>
                     {Array(firstDOTW).fill(void 0).map((item, index) => (
                         <S.EachBox style={{ border: 'none' }} />
                     ))}
@@ -42,7 +43,7 @@ function Calendar() {
                         <S.EachBox style={today === `${year}-${month}-${index + 1}` ? { color: '#ffffff', backgroundColor: '#707070' } : {}} onClick={() => navigate(`/diary?year=${year}&month=${month}&day=${index + 1}`)} > {index + 1}</S.EachBox>
                     ))}
                 </div>
-                <S.Arrow src={ArrowRigth} onClick={() => setMonth(month + 1)} />
+                <S.Arrow style={is6Week ? { marginBottom: '100px' } : {}} src={ArrowRigth} onClick={() => setMonth(month + 1)} />
             </S.CalendarContent>
         </S.Wrapper >
     )
