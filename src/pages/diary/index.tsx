@@ -11,7 +11,8 @@ function useQuery() {
 function Diary() {
     const [content, setContent] = useState({
         title: '',
-        contents: ''
+        contents: '',
+        weather: "good"
     })
     const { title, contents } = content;
     const onChangeContent = useCallback(e => {
