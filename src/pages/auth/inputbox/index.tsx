@@ -13,13 +13,13 @@ interface PropsType {
     onChangeAuthContent: (e: ChangeEvent<HTMLInputElement>) => void
 }
 function InputBox({ item, index, onChangeAuthContent }: PropsType) {
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(!item.eye)
     const onClickSetVisible = () => {
         setVisible(!visible)
     }
     return (
         <S.InputLabel style={{ marginTop: index === 0 ? '43px' : '18px' }}>
-            <S.Input placeholder={item.placeholder} name={item.name} onChange={onChangeAuthContent} value={item.value} />
+            <S.Input placeholder={item.placeholder} type={visible ? 'text' : 'password'} name={item.name} onChange={onChangeAuthContent} value={item.value} />
             {item.eye ?
                 <img src={visible ? Visible : InVisible} style={visible ? { width: '25px' } : { width: '30px' }} alt="" onClick={onClickSetVisible} />
                 : ''}

@@ -5,6 +5,7 @@ import Logo from '../../assets/imgaes/logo_black.svg'
 import InputBox from './inputbox'
 import axios from 'axios'
 import { BASE_URL } from '../../constant/api'
+import { useNavigate } from 'react-router'
 interface LoginType {
     name: string
     placeholder: string
@@ -47,17 +48,23 @@ function Auth() {
     }]
     const SignupArray: SignupType[] = [
         {
+            name: 'name',
+            placeholder: '닉네임',
+            eye: false,
+            value: name
+        },
+        {
             name: 'email',
             placeholder: 'E-mail',
             eye: false,
             value: email
         },
-        {
-            name: 'authNum',
-            placeholder: '인증번호를 입력하세요',
-            eye: false,
-            value: authNum
-        },
+        // {
+        //     name: 'authNum',
+        //     placeholder: '인증번호를 입력하세요',
+        //     eye: false,
+        //     value: authNum
+        // },
         {
             name: 'password',
             placeholder: 'PassWord',
@@ -69,25 +76,28 @@ function Auth() {
             placeholder: 'PassWord 확인',
             eye: true,
             value: checkPassword
-        },
-        {
-            name: 'name',
-            placeholder: '닉네임',
-            eye: false,
-            value: name
         }
     ]
+    const navigate = useNavigate()
     const onClickSubmit = (type: string) => {
         if (type === '회원가입') {
             axios.post(BASE_URL + '/register', {
                 email,
                 name,
                 password
+            }).then(() => {
+                alert('회원가입을 성공하였습니다!')
             })
         } else if (type === '로그인') {
             axios.post(BASE_URL + '/login', {
                 email,
                 password
+            }).then((res) => {
+                alert('로그인을 성공하였습니다!')
+                navigate('/calendar')
+                localStorage.setItem('access_token', res.data.accessToken)
+                localStorage.setItem('refresh_token', res.data.refreshToken)
+                axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access_token")}`;
             })
         }
     }
