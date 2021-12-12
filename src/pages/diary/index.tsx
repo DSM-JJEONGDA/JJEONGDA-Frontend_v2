@@ -9,12 +9,18 @@ function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 function Diary() {
+    const query = useQuery();
+    const year = query.get('year');
+    const month = query.get('month');
+    const day = query.get('day');
+    const thisDay = `${year}-${month}-${day}`
     const [content, setContent] = useState({
         title: '',
         contents: '',
-        weather: "good"
+        weather: "good",
+        date: thisDay
     })
-    const { title, contents } = content;
+    const { title, contents, weather } = content;
     const onChangeContent = useCallback(e => {
         setContent({
             ...content,
@@ -24,14 +30,10 @@ function Diary() {
     const onClickSave = useCallback(() => {
         axios.post(BASE_URL + '/write', {
             title,
-            contents
+            contents,
+            weather
         })
     }, [title, contents])
-    const query = useQuery();
-    const year = query.get('year');
-    const month = query.get('month');
-    const day = query.get('day');
-    console.log(year, '-', month, '-', day)
     return (
         <S.Wrapper>
             <S.DiarySection>
