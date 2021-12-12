@@ -131,7 +131,9 @@ function Auth() {
                         ))
                         :
                         SignupArray.map((item: SignupType, index: number) => (
-                            <InputBox item={item} index={index} onChangeAuthContent={onChangeAuthContent} />
+                            <div>
+                                <InputBox item={item} index={index} onChangeAuthContent={onChangeAuthContent} />
+                            </div>
                         ))
                     }
                     <S.Button onClick={() => onClickSubmit(type)}>{type}</S.Button>

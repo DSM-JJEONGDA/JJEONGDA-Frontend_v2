@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import * as S from './styles'
 import Visible from '../../../assets/imgaes/auth/visible.svg'
 import InVisible from '../../../assets/imgaes/auth/invisible.svg'
@@ -13,6 +13,9 @@ interface PropsType {
     onChangeAuthContent: (e: ChangeEvent<HTMLInputElement>) => void
 }
 function InputBox({ item, index, onChangeAuthContent }: PropsType) {
+    useEffect(() => {
+        console.log(item)
+    }, [])
     const [visible, setVisible] = useState(!item.eye)
     const onClickSetVisible = () => {
         setVisible(!visible)
