@@ -5,7 +5,9 @@ import { BASE_URL } from '../../constant/api';
 import * as S from './styles'
 function CalendarPage() {
     useEffect(() => {
-        axios.get(BASE_URL + '/list/1').then((res) => {
+        axios.get(BASE_URL + '/list/1', {
+            headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+        }).then((res) => {
             console.log(res)
         })
     }, [])
