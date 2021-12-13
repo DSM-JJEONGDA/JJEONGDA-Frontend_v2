@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import * as S from './styles'
 import Line from '../../assets/imgaes/diary/line.svg'
 import axios from 'axios';
@@ -20,6 +20,20 @@ function Diary() {
         weather: "good",
         date: thisDay
     })
+    useEffect(() => {
+        axios.get(BASE_URL + '/get/' + thisDay)
+            .then((res) => {
+                if (res.data[0] !== undefined) {
+                    const { title, contents, date } = res.data[0]
+                    setContent({
+                        title: title,
+                        contents: contents,
+                        date: date,
+                        weather: "good",
+                    })
+                }
+            })
+    }, [])
     const { title, contents, weather } = content;
     const onChangeContent = useCallback(e => {
         setContent({
