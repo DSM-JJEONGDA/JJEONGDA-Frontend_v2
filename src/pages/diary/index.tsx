@@ -31,7 +31,8 @@ function Diary() {
         axios.post(BASE_URL + '/write', {
             title,
             contents,
-            weather
+            weather,
+            date: content.date
         })
     }, [title, contents])
     return (
