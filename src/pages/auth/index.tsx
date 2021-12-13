@@ -6,6 +6,8 @@ import InputBox from './inputbox'
 import axios from 'axios'
 import { BASE_URL } from '../../constant/api'
 import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { setLogin } from '../../modules/redux/action/auth'
 interface LoginType {
     name: string
     placeholder: string
@@ -78,6 +80,7 @@ function Auth() {
             value: checkPassword
         }
     ]
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const onClickSubmit = (type: string) => {
         if (type === '회원가입') {
@@ -95,6 +98,7 @@ function Auth() {
             }).then((res) => {
                 alert('로그인을 성공하였습니다!')
                 navigate('/calendar')
+                dispatch(setLogin(true))
                 localStorage.setItem('access_token', res.data.accessToken)
                 localStorage.setItem('refresh_token', res.data.refreshToken)
                 axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem("access_token")}`;
