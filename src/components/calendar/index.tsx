@@ -2,7 +2,22 @@ import React, { useEffect, useState } from 'react'
 import * as S from './styles'
 import ArrowLeft from '../../assets/imgaes/calendar/arrow_left.svg'
 import ArrowRigth from '../../assets/imgaes/calendar/arrow_right.svg'
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
+import { reducerType } from '../../modules/redux/reducer'
+import { BASE_URL } from '../../constant/api'
+import { Link } from 'react-router-dom'
+import Logout from '../../assets/imgaes/calendar/logout.svg'
 import { useNavigate } from 'react-router'
+import { setLogin } from '../../modules/redux/action/auth'
+import { setUserInfo } from '../../modules/redux/action/user'
+interface GetType {
+    contents: string
+    date: string
+    title: string
+    userId: number
+    weather: string
+}
 
 function Calendar() {
     const Day: string[] = ['SUN', 'MON', 'TUE', 'WED', 'THU', "FRI", "SAT"]
@@ -23,10 +38,39 @@ function Calendar() {
             setYear(year - 1)
         }
     }, [month, year])
-    const navigate = useNavigate();
+    const [list, setList] = useState<GetType[]>([])
+    const [dateList, setDateList] = useState<string[]>([])
+    const userId = useSelector((state: reducerType) => state.setuser.info.id)
+    useEffect(() => {
+        axios.get(BASE_URL + '/list/' + userId, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` }
+        }).then((res) => {
+            setList(res.data)
+        })
+    }, [userId, month])
+    useEffect(() => {
+        const dateListArr = list.map(x => x.date)
+        setDateList(dateListArr)
+    }, [list])
+    const navigate = useNavigate()
     const is6Week = firstDOTW + lastDay > 35 ? true : false;
+    const dispatch = useDispatch()
+    const onClickLogout = () => {
+        localStorage.removeItem('access_token')
+        dispatch(setLogin(false))
+        setUserInfo({
+            id: 0,
+            email: '',
+            name: '',
+        })
+        navigate('/')
+    }
     return (
         <S.Wrapper>
+            <S.Logout onClick={onClickLogout}>
+                <p>로그아웃</p>
+                <img src={Logout} alt="" />
+            </S.Logout>
             <S.Month>{month}</S.Month>
             <S.Days>
                 {Day.map((item: string, index: number) => (
@@ -39,9 +83,11 @@ function Calendar() {
                     {Array(firstDOTW).fill(void 0).map((item, index) => (
                         <S.EachBox style={{ border: 'none' }} />
                     ))}
-                    {Array(lastDay).fill(void 0).map((item, index) => (
-                        <S.EachBox style={today === `${year}-${month}-${index + 1}` ? { color: '#ffffff', backgroundColor: '#707070' } : {}} onClick={() => navigate(`/diary?year=${year}&month=${month}&day=${index + 1}`)} > {index + 1}</S.EachBox>
-                    ))}
+                    {Array(lastDay).fill(void 0).map((item, index) => {
+                        const thisDay = `${year}-${month}-${index + 1}`
+                        const isFill = dateList.includes(thisDay)
+                        return <Link to={`/diary?year=${year}&month=${month}&day=${index + 1}`}><S.EachBox style={today === thisDay ? { color: '#ffffff', backgroundColor: '#707070' } : isFill ? { backgroundColor: '#C9AC82', color: '#ffffff' } : {}} > {index + 1}</S.EachBox></Link>
+                    })}
                 </div>
                 <S.Arrow style={is6Week ? { marginBottom: '100px' } : {}} src={ArrowRigth} onClick={() => setMonth(month + 1)} />
             </S.CalendarContent>

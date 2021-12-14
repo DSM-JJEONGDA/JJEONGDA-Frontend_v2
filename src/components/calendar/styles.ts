@@ -8,6 +8,16 @@ export const Wrapper = styled.section`
     width: 100%;
     padding-top: 52px;
 `
+export const Logout = styled.div`
+    display: flex;
+    font-family: 'BM Kirang Haerang';
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 50px;
+    > p {
+        margin-right: 13px;
+    }
+`
 export const Month = styled.h1`
     font-size: 100px;
     font-family: 'BM Kirang Haerang';
