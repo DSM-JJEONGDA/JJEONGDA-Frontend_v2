@@ -47,7 +47,7 @@ function Calendar() {
         }).then((res) => {
             setList(res.data)
         })
-    }, [userId, month])
+    }, [userId])
     useEffect(() => {
         const dateListArr = list.map(x => x.date)
         setDateList(dateListArr)
