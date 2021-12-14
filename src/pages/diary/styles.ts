@@ -55,7 +55,6 @@ export const ContentInput = styled.textarea`
     font-size: 20px;
     line-height: 40px;
 `
-
 export const SaveBtn = styled.button`
     width: 70px;
     height: 30px;
@@ -69,4 +68,7 @@ export const SaveBtn = styled.button`
     align-items: center;
     justify-content: center;
     margin: 40px 0 0 auto;
+`
+export const Exit = styled(SaveBtn)`
+    
 `

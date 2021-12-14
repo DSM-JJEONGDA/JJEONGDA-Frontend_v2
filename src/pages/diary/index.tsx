@@ -22,6 +22,7 @@ function Diary() {
         date: thisDay,
         id: ''
     })
+    const [already, setAlready] = useState(false)
     useEffect(() => {
         axios.get(BASE_URL + '/get/' + thisDay)
             .then((res) => {
@@ -35,6 +36,7 @@ function Diary() {
                         weather: "good",
                         id: id
                     })
+                    setAlready(true)
                 }
             })
     }, [])
@@ -70,10 +72,15 @@ function Diary() {
                 <S.Title>오늘의 하루</S.Title>
                 <div style={{ display: 'flex' }}>
                     <S.TitleInput placeholder="제목을 입력하세요" onChange={onChangeContent} value={title} name="title" />
-                    <img onClick={onClickRemoveBtn} src={RemoveBtn} alt="" style={{ marginLeft: 'auto' }} />
+                    {already ?
+                        <img onClick={onClickRemoveBtn} src={RemoveBtn} alt="" style={{ marginLeft: 'auto' }} />
+                        : ''}
                 </div>
                 <S.ContentInput img={Line} placeholder={"오늘의 하루를 적어보세요!"} onChange={onChangeContent} value={contents} name="contents" />
-                <S.SaveBtn onClick={onClickSave}>저장</S.SaveBtn>
+                {already ?
+                    <S.Exit onClick={() => navigate('/calendar')}>나가기</S.Exit> :
+                    <S.SaveBtn onClick={onClickSave}>저장</S.SaveBtn>
+                }
             </S.DiarySection>
         </S.Wrapper>
     )
