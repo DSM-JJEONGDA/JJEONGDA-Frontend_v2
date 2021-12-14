@@ -5,6 +5,8 @@ import axios from 'axios';
 import { BASE_URL } from '../../constant/api';
 import { useLocation, useNavigate } from 'react-router'
 import RemoveBtn from '../../assets/imgaes/diary/remove.svg'
+import { useSelector } from 'react-redux';
+import { reducerType } from '../../modules/redux/reducer';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -60,6 +62,13 @@ function Diary() {
             })
     }, [title, contents])
     const navigate = useNavigate()
+    const loginStatus = useSelector((state: reducerType) => state.setlogin.loginStatus);
+    useEffect(() => {
+        if (!loginStatus) {
+            alert('로그인이 필요합니다!')
+            navigate('/')
+        }
+    }, [loginStatus])
     const onClickRemoveBtn = () => {
         axios.delete(BASE_URL + '/delete/' + content.id)
             .then(() => {

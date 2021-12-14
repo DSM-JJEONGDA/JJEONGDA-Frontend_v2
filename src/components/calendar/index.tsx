@@ -53,6 +53,13 @@ function Calendar() {
         setDateList(dateListArr)
     }, [list])
     const navigate = useNavigate()
+    const loginStatus = useSelector((state: reducerType) => state.setlogin.loginStatus);
+    useEffect(() => {
+        if (!loginStatus) {
+            alert('로그인이 필요합니다!')
+            navigate('/')
+        }
+    }, [loginStatus])
     const is6Week = firstDOTW + lastDay > 35 ? true : false;
     const dispatch = useDispatch()
     const onClickLogout = () => {
