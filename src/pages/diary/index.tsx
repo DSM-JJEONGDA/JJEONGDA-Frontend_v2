@@ -3,7 +3,8 @@ import * as S from './styles'
 import Line from '../../assets/imgaes/diary/line.svg'
 import axios from 'axios';
 import { BASE_URL } from '../../constant/api';
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
+import RemoveBtn from '../../assets/imgaes/diary/remove.svg'
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -18,18 +19,21 @@ function Diary() {
         title: '',
         contents: '',
         weather: "good",
-        date: thisDay
+        date: thisDay,
+        id: ''
     })
     useEffect(() => {
         axios.get(BASE_URL + '/get/' + thisDay)
             .then((res) => {
+                console.log(res.data)
                 if (res.data[0] !== undefined) {
-                    const { title, contents, date } = res.data[0]
+                    const { title, contents, date, id } = res.data[0]
                     setContent({
                         title: title,
                         contents: contents,
                         date: date,
                         weather: "good",
+                        id: id
                     })
                 }
             })
@@ -48,12 +52,26 @@ function Diary() {
             weather,
             date: content.date
         })
+            .then(() => {
+                alert('성공');
+                navigate('/calendar')
+            })
     }, [title, contents])
+    const navigate = useNavigate()
+    const onClickRemoveBtn = () => {
+        axios.delete(BASE_URL + '/delete/' + content.id)
+            .then(() => {
+                navigate('/calendar')
+            })
+    }
     return (
         <S.Wrapper>
             <S.DiarySection>
                 <S.Title>오늘의 하루</S.Title>
-                <S.TitleInput placeholder="제목을 입력하세요" onChange={onChangeContent} value={title} name="title" />
+                <div style={{ display: 'flex' }}>
+                    <S.TitleInput placeholder="제목을 입력하세요" onChange={onChangeContent} value={title} name="title" />
+                    <img onClick={onClickRemoveBtn} src={RemoveBtn} alt="" style={{ marginLeft: 'auto' }} />
+                </div>
                 <S.ContentInput img={Line} placeholder={"오늘의 하루를 적어보세요!"} onChange={onChangeContent} value={contents} name="contents" />
                 <S.SaveBtn onClick={onClickSave}>저장</S.SaveBtn>
             </S.DiarySection>
