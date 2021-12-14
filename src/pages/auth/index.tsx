@@ -98,6 +98,7 @@ function Auth() {
             }).then((res) => {
                 alert('로그인을 성공하였습니다!')
                 navigate('/calendar')
+                localStorage.setItem('login', 'true');
                 dispatch(setLogin(true))
                 localStorage.setItem('access_token', res.data.accessToken)
                 localStorage.setItem('refresh_token', res.data.refreshToken)
@@ -107,7 +108,7 @@ function Auth() {
     }
     return (
         <S.Wrapper>
-            <S.BackgroundImg style={type === '로그인' ? { height: '100vh' } : { left: '175px' }} img={BackGround} />
+            <S.BackgroundImg style={type === '로그인' ? { height: '100vh' } : { height: '942.61px', left: '175px' }} img={BackGround} />
             <S.Logo src={Logo} />
             <S.AuthSection>
                 <S.Types>

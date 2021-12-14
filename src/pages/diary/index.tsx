@@ -66,6 +66,7 @@ function Diary() {
     useEffect(() => {
         if (!loginStatus) {
             alert('로그인이 필요합니다!')
+            localStorage.removeItem('login')
             navigate('/')
         }
     }, [loginStatus])

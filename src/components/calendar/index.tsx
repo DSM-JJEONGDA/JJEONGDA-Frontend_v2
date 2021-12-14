@@ -54,9 +54,11 @@ function Calendar() {
     }, [list])
     const navigate = useNavigate()
     const loginStatus = useSelector((state: reducerType) => state.setlogin.loginStatus);
+    console.log(loginStatus)
     useEffect(() => {
         if (!loginStatus) {
             alert('로그인이 필요합니다!')
+            localStorage.removeItem('login')
             navigate('/')
         }
     }, [loginStatus])

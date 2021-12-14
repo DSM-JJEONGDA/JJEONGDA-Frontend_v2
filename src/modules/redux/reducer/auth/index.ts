@@ -3,7 +3,7 @@ import { SET_LOGIN } from "../../action/auth/interface";
 import AuthState from "./interface";
 
 const initState: AuthState = {
-    loginStatus: false
+    loginStatus: localStorage.getItem('login') === 'true' ? true : false
 }
 
 const setLoginReducer = (state: AuthState = initState, action: authActionType): AuthState => {
